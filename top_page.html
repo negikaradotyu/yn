@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes or No</title>
+    <link rel="stylesheet" href="css/yn.css">
+
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1>Yes Or No</h1>
+            <h1 class="title">はい</h1><span class="ka">か</span> <h1 class="title">いいえ</h1><span class="ka">で</span>
+            <h1 class="title2">答えてください</h1>
+        </div>
+    </header>
+    
+    <div>
+        <div class="topper">
+            <form name="login_form">
+                <div class="login_form_btm">
+                    
+                <div class="first"><p>User</p></div> 
+                <input type="id" name="user_id" placeholder="e-mail"><input type="password" name="password"placeholder="password">
+                </div>
+                <button type="submit">login</button>
+            </form>
+            <div class="or"><p>or</p></div>
+            <form name="login_form">
+                <div class="login_form_btm">
+                    
+                <div class="first"><p>New user</p></div> 
+                <input type="id" name="user_id" placeholder="e-mail"><input type="password" name="password"placeholder="password">
+                </div>
+                <button type="submit">register</button>
+            </form>
+        </div>
+
+        <div class="side_menu">
+            <p>カテゴリー</p>
+            <a href="">好き嫌い</a>
+            <a href="">政治</a>
+            <a href="">経済</a>
+            <a href="">芸能</a>
+            <a href="">生活</a>
+        </div>
+    
+        <div class="main_menu">
+            <div class="article">
+                <p>
+                    <?php @foreach($items as $item){ 
+                    echo $item['title'];
+                    <img src="$item['address']" alt="">
+                    }?>
+                </p>
+            
+            </div>
+        </div>
+    
+    </main>
+    
+    <footer>
+    
+    </footer>
+
+</body>
+</html>

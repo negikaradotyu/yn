@@ -1,0 +1,54 @@
+.categories {
+  display: flex;
+  flex-direction: column; /* 通常時に縦並びに配置 */
+  margin-left: 5px;
+}
+
+.categories a {
+  margin: 5px 10px 5px 15px; /* マージンを調整（上右下左） */
+  display: block; /* アンカータグをブロック要素に変更 */
+  text-decoration: none; /* デフォルトの下線を削除 */
+  color: #333; /* テキストカラーを指定 */
+}
+
+@media (max-width: 767px) { /* 画面の幅が767px以下の場合 */
+  .categories {
+      flex-direction: row; /* 横並びに配置 */
+  }
+
+  .categories a {
+      margin: 0 5px; /* マージンを調整 */
+  }
+}
+
+.search-form {
+  margin-left: 10px; /* 左側に10pxのマージンを追加 */
+  display: flex; /* フォーム要素を横並びに配置 */
+  align-items: left; /* フォーム要素を縦方向に中央揃え */
+  flex-direction: column;
+}
+
+.search-form textarea {
+  resize: none; /* ユーザーによるリサイズを無効化 */
+  padding: 5px; /* 適宜パディングを調整 */
+  width: 120px; /* 幅を1.5倍に設定 */
+  border: 1px solid #ccc; /* ボーダーを指定 */
+  border-radius: 4px; /* ボーダーの角を丸くする */
+  margin-bottom: 5px; /* 下に余白を追加 */
+}
+
+.search-form input[type="submit"] {
+  margin-left: 15px; /* マージンを追加 */
+  padding: 5px 10px; /* 適宜パディングを調整 */
+  background-color: #4CAF50; /* ボタンの背景色を指定 */
+  color: white; /* ボタンのテキストカラーを白に指定 */
+  border: none; /* ボーダーを削除 */
+  width: 50px;
+  text-align: center;
+  border-radius: 4px; /* ボタンの角を丸くする */
+  cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.search-form input[type="submit"]:hover {
+  background-color: #45a049; /* ボタンにホバーした際の背景色を指定 */
+}

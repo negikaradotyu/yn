@@ -1,0 +1,72 @@
+/* Set the widths for each column */
+.question{
+  width: auto;
+  
+}
+.waku1 {
+  width: 40%;
+}
+
+.waku3 {
+  width: 6%;
+  text-align: center;
+}
+
+.waku4 {
+  width: 8%;
+  text-align: center;
+}
+
+.waku5 {
+  width: 40%;
+  text-align: center;
+}
+
+/* Centerize the text in the table cells */
+td.centerize {
+  text-align: center;
+}
+
+/* Display the form-check-label elements in a horizontal line */
+.form-check-label {
+  margin:0 5px; /* Add some space between the labels */
+}
+/* Display the form-check-label elements in a horizontal line */
+.form-check-inline {
+  display: inline-block;
+ /* Add some space between the labels */
+ text-align: center;
+ align-items: center;
+}
+
+.question-table {
+  width: 100%;
+
+}
+
+td {
+  text-align: center;
+}
+.gidai{
+  text-align: left;
+  padding: 5px;
+}
+.fa-brands{
+  margin-right: 5px;
+}
+
+/* テーブルヘッダーのスタイルを追加（任意） */
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.menu-subject{
+  text-align: right;
+  margin-right: 20px;
+}
+
+
+
+
+

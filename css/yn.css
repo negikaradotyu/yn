@@ -1,0 +1,83 @@
+.header{
+    font-size: 15px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+}
+
+.title{
+    text-align: center;
+    display: inline;
+}
+
+.title2{
+    display: block;
+}
+
+.topper{
+    width: auto;
+    background-color: aquamarine;
+    height: auto;
+}
+
+
+.ka{
+    font-size: 2px;
+    font-style:oblique;
+}
+
+.side_menu{
+    width: 200px;
+    height: 500px;
+    background-color: cornflowerblue;
+    float: left;
+}
+
+.side_menu a{
+    display: block ;
+    padding-left: 10px;
+    
+    
+}
+
+.main_menu{
+    width: 500px;
+    background-color: rgba(72, 72, 221, 0.748);
+    height: 500px;
+    float: left;
+    
+    
+
+}
+
+body object{
+    width:100vw;
+    height:100vw;
+
+}
+
+main{
+    width:auto;
+}
+
+.login_form_btm{
+    display: inline;
+
+}
+.first{
+    float: left;
+}
+.first p{
+    display: inline;
+    padding-right: 10px;
+}
+
+input{
+    margin-right:  10px;
+}
+
+.or p{
+    margin: 0;
+}
+
+
+
