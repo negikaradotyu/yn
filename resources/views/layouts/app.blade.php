@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <script rel="stylesheet" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -24,7 +25,7 @@
     
     @yield('css')
     </head>
-    <body class="antialiased">
+<body class="antialiased">
 <div class="top-wrapper">
     <div class="accesscount">
         <p>投票者数:{{ $counter }}</p>
@@ -72,13 +73,14 @@
     </ul>
 
 </div>
-<div class="attention">あなたはGUEST、
+@guest <div class="attention">あなたはGUEST、
 投稿/投票履歴は記録されません</div>
+@endguest
 <div class="menus">
     <div class="side-menu">
         <div class="categories">
             <div class="subtitle">
-                <p>All categories</p>
+                <p><i class="fa-regular fa-folder"></i>Categories</p>
             </div>
         </div>
         <div class="content">
@@ -88,7 +90,7 @@
     <div class="main-menu">
         <div class="post">
             <div class="subtitle">
-                <p>議題投稿</p>
+                <p><i class="fa-regular fa-folder"></i>議題投稿</p>
             </div>
             <div class="content">
                 @yield('content2')
@@ -96,7 +98,7 @@
         </div>
         <div class="new">
             <div class="subtitle">
-                <p>What's New!!</p>
+                <p><i class="fa-regular fa-folder"></i>What's New!!</p>
             </div>            
             <div class="content">
                 @yield('content3')

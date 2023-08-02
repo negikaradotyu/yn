@@ -3,7 +3,7 @@
 @section('content')
     <div class="categories">
         @foreach($categories as $category)
-        <a href="category{{ $category['category'] }}">{{ $category['name'] }}</a>
+        <a href="category{{ $category['category'] }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
         @endforeach
 
     </div>
@@ -84,7 +84,7 @@
             <!-- {{$done=0}} -->
                 <input type='hidden' name='user_id' value="{{ $user['id'] }}">
             <tr>
-                <td><div class="gidai"><i class="fa-brands fa-elementor fa-flip" style="color: #b4af2d;"></i>{{$question['question']}}</div></td>
+                <td><div class="gidai"><i class="fa-regular fa-comment"></i>{{$question['question']}}</div></td>
                 @foreach($records as $record)                
                             @if($record['question_id']==$question['id'] && $user['id']==$record['user_id'])
                             <td class="centerize"> </td>
