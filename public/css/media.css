@@ -106,11 +106,16 @@
           margin-left: 10px;
           padding-top: 10px;
         }
-      
+
         input[type="submit"] {
           min-width: 80px; /* オプション：最小の幅を指定 */
           margin-left: 10px; /* オプション：検索ボタンの間隔を設定 */
           margin-right: 10px; /* 追加：検索ボタンの右側に余白を設ける */
-        }
+        }        
       }
+      @media screen and (max-width: 470px) {
+        #a{
+          font-size: 12px ;
+        }
+}
 

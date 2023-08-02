@@ -46,6 +46,10 @@
                         <input class="form-check-input" type="radio" name="answer" id="noOption_global" value="2">
                         <label class="form-check-label" for="noOption_global">No</label>
                         </div>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="answer" id="noOption_global" value="0">
+                        <label class="form-check-label" for="noOption_global">無効</label>
+                        </div>
                         <input class="btn btn-primary" type="submit" value="投票">
 
                     
@@ -92,17 +96,17 @@
                 <td  class="centerize">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="{{ $question['id'] }}" id="yesOption_{{ $question['id'] }}" value="1">
-                    <label class="form-check-label" for="yesOption_{{ $question['id'] }}">はい</label>
+                    <label id="a" class="form-check-label" for="yesOption_{{ $question['id'] }}">Yes</label>
                     </div>
 
                     <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="{{ $question['id'] }}" id="noOption_{{ $question['id'] }}" value="2">
-                    <label class="form-check-label" for="noOption_{{ $question['id'] }}">いいえ</label>
+                    <label  id="a" class="form-check-label" for="noOption_{{ $question['id'] }}">No</label>
                     </div>
 
                     <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="{{ $question['id'] }}" id="invalidOption_{{ $question['id'] }}" value="0">
-                    <label class="form-check-label" for="invalidOption_{{ $question['id'] }}">無効</label>
+                    <label  id="a" class="form-check-label" for="invalidOption_{{ $question['id'] }}">無効</label>
                 </div>
                 </td>
                 </tr>

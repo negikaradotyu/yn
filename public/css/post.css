@@ -44,23 +44,24 @@ input[type="submit" i] {
   cursor: pointer;
   padding: 3px 5px;
   border-radius: 8px;
-  background-color: rgb(255, 186, 112);
+  background-color: rgb(253, 253, 176);
   size: 30px;
 }
 
 .form-check-input:checked + .form-check-label, .btn-check:checked + .btn-outline-danger {
-  background-color: lightblue; /* 選択時の背景色を変更 */
+  background-color: rgb(189, 189, 52); /* 選択時の背景色を変更 */
 }
 
 
 
 .form-check-input:checked + .form-check-label,
 .form-check-label:hover { /* hover時のスタイルを追加 */
-  background-color: lightblue;
+  background-color: rgb(189, 189, 52);
+  border: 2px solid darkgoldenrod;
 }
 
 .btn-outline-danger:hover { /* hover時のスタイルを追加 */
-  background-color: lightblue;
+  background-color: rgb(189, 189, 52);
 }
 .category{
   margin-left: 15px;
