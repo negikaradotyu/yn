@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="content">
-            @yield('content')
+            @yield('content5')
         </div>
     </div>
     <div class="main-menu">

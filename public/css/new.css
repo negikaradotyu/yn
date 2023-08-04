@@ -4,7 +4,10 @@
   
 }
 .waku1 {
-  width: 40%;
+  width: 45%;
+}
+.waku2 {
+  width: 20%;
 }
 
 .waku3 {
@@ -18,7 +21,7 @@
 }
 
 .waku5 {
-  width: 40%;
+  width: 35%;
   text-align: center;
 }
 
@@ -46,6 +49,7 @@ td.centerize {
 
 td {
   text-align: center;
+  border-bottom: 1px solid rgb(167, 160, 18);
 }
 .gidai{
   text-align: left;
@@ -64,6 +68,10 @@ th {
 .menu-subject{
   text-align: right;
   margin-right: 20px;
+}
+
+.menu-object{
+  width:100%;
 }
 
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content5')
     <div class="categories">
         @foreach($categories as $category)
         <a href="category{{ $category['category'] }}">{{ $category['name'] }}</a>

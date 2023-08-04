@@ -76,7 +76,7 @@
     <div class="side-menu">
         <div class="categories">
             <div class="subtitle">
-                <p>All categories</p>
+                <p>Categories</p>
             </div>
         </div>
         <div class="content">
@@ -86,10 +86,10 @@
     <div class="main-menu">
         <div class="profile">
             <div class="subtitle">
-                <p>My page</p>
+                <p>{{$choose}}</p>
             </div>
             <div class="content">
-                @yield('content4')
+                @yield('category')
             </div>
         </div>
     </div>

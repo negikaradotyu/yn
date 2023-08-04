@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content5')
     <div class="categories">
         @foreach($categories as $category)
         <a href="category{{ $category['category'] }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
@@ -70,19 +70,21 @@
 @section('content3')
 
 <form method='POST' action="/kekka" name="kekka">    
-
+ @csrf
          <!-- {{$a=0}} -->
     <div class="question"> 
     <table class="question-table">
-            <tr>
-                <th class="waku1">議題</th>
-                <th class="waku2">未</th>
-                <th class="waku3">Yes</th>
-                <th class="waku3">No</th>
-                <th class="waku4">Total</th>
-                <th class="waku5">投票</th>
-            </tr>
-            @csrf
+    <tr>
+        <th rowspan="2" class="waku1">議題</th>
+        <th colspan="3" class="waku2">投票数</th>
+        <th rowspan="2" class="waku5">投票</th>
+    </tr>
+    <tr>
+        <th class="waku3">Yes</th>
+        <th class="waku3">No</th>
+        <th class="waku4">Total</th>
+    </tr>
+           
             <!-- {{$a=0}} -->
             @foreach($questions as $question) 
             <!-- {{$done=0}} -->
@@ -91,7 +93,6 @@
                 <td><div class="gidai"><i class="fa-regular fa-comment"></i>{{$question['question']}}</div></td>
                 @foreach($records as $record)                
                             @if($record['question_id']==$question['id'] && $user['id']==$record['user_id'])
-                            <td class="centerize"> </td>
                             <td class="centerize"><?php echo $summaries[$a][0]['yes']; ?></td>
                             <td class="centerize"><?php echo $summaries[$a][0]['no']; ?></td>
                             <td class="centerize"><?php echo $summaries[$a][0]['total']; ?></td>
@@ -103,7 +104,6 @@
                             @endif
                 @endforeach   
                 @if($done==0)
-                <td class="centerize">未</td>
                             <td class="centerize"><?php echo $summaries[$a][0]['yes']; ?></td>
                             <td class="centerize"><?php echo $summaries[$a][0]['no']; ?></td>
                             <td class="centerize"><?php echo $summaries[$a][0]['total']; ?></td>

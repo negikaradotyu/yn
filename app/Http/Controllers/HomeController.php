@@ -80,72 +80,27 @@ class HomeController extends Controller
     public function category($category)
     {   
         $user = \Auth::user();
-        $records=Records::where('user_id', $user['id'])->get();
-        $categories = Category::get();
-        $cho=Category::where('choose', $category)->get();
-        //dd($cho);
-
-        //access counter
+        $choose=Category::where('choose',$category)->first();
+        dd($choose);
+        // get counter
+        $categories=Category::get();
         $counts=AccessCounter::get();
         $count = $counts->first();
-        $date=$count->date;
         $counter=$count->counter;
-        $ui=$count->id;
-        $today=Carbon::today()->toDateString();
-        
-
-        if($date==$today && $ui==$user['id']){
-
-        }else{
-            $counter++;
-            $count->id = $user['id'];
-            $count->date = $today;
-            $count->counter = $counter;
-            $count->save();
-    }
-
-
-
-
-        if ($cho->isNotEmpty()) {
-            $choose = $cho[0]['name'];
-        } else {
-            $choose = $category;
-        }
-        
-        if($choose=="top10"){
-            $questions = DB::table('questionaries')
-            ->join('summaries', 'questionaries.id', '=', 'summaries.id')
-            ->select('questionaries.id','questionaries.category','questionaries.question', 'summaries.yes','summaries.no','summaries.total')
-            ->orderBy('summaries.total', 'DESC')
-            ->paginate(10);
-        }elseif($choose=="未回答"){
-            $id1_question_ids = Records::where('user_id', $user['id'])->pluck('question_id')->toArray();
-            $id2_question_ids = Records::where('user_id', '<>', $user['id'])->pluck('question_id')->toArray();
-            
-            // id1ではなく、重複しないquestion_idを取得
-            $another_records = array_values(array_unique(array_diff($id2_question_ids, $id1_question_ids)));
-            
-            // $another_recordsを利用して他の処理を行う
-            // ...
-            
-            // $another_recordsを出力する
-            
-            
-            $questions = Questionaries::whereIn('id', $another_records)->paginate(10);
-        }else{
-            $questions = DB::table('questionaries')
-            ->join('summaries', 'questionaries.id', '=', 'summaries.id')
-            ->where('questionaries.category', $category)
-            ->select('questionaries.id','questionaries.category','questionaries.question', 'summaries.yes','summaries.no','summaries.total')
-            ->orderBy('summaries.total', 'DESC')
-            ->paginate(10);
-        };
-        
-        if(empty($summaries)){
-        return view('category', compact('counter','records','user', 'choose','questions','categories','category' ));
-        }else{
-            return view('category', compact('counter','records','user', 'choose','questions','categories','category','summaries'));
-        };
+        //question, yes, no , total
+        $questions = DB::table('questionaries')
+        ->join('summaries', 'questionaries.id', '=', 'summaries.id')
+        ->select('questionaries.question', 'summaries.*')
+        ->where('questionaries.category', $choose)
+        ->orderBy('questionaries.updated_at', 'DESC')
+        ->paginate(10);
+        //records
+        $records = DB::table('questionaries')
+        ->join('records', 'questionaries.id', '=', 'records.question_id')
+        ->select('questionaries.*', 'records.user_id', 'records.question_id')
+        ->where( 'records.user_id',$user['id'])
+        ->get();
+        //dd($records);
+        return view('category', compact('choose','categories','records','user','questions','counter'));        
     }
 }

@@ -101,10 +101,13 @@
         }
       
         textarea {
-          flex: 1; /* オプション：テキストエリアが残りのスペースを占有 */
-          min-width: 100px; /* オプション：最小の幅を指定 */
+          flex: 1; /* オプション：テキストエリアが残りのスペースを占有 *//* オプション：最小の幅を指定 */
           margin-left: 10px;
           padding-top: 10px;
+        }
+        .question textarea{
+          margin-right: 10px;
+          width:90%;
         }
 
         input[type="submit"] {

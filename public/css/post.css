@@ -1,7 +1,7 @@
 .question textarea{
   resize: none; /* ユーザーによるリサイズを無効化 */
   padding: 2px; /* 適宜パディングを調整 */
-  width: 400px; /* 幅を1.5倍に設定 */
+  width: 90%; /* 幅を1.5倍に設定 */
   border: 1px solid #ccc; /* ボーダーを指定 */
   border-radius: 4px; /* ボーダーの角を丸くする */
   font-size: 15px;
