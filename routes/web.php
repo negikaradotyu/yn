@@ -26,53 +26,15 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     $count = AccessCounter::get()->first();
     $counter=$count['counter']+1;
-    $user = \Auth::user();
-    if(empty($user)){
-        //dd($counter);
-        
-            // AccessCounterモデルをインスタンス化
-$accessCounter = new AccessCounter();
+    $accessCounter = new AccessCounter();
+    $accessCounter->update(['counter' => $counter], ['id' => 0]);
+    $questions = DB::table('questionaries')
+        ->join('summaries', 'questionaries.id', '=', 'summaries.id')
+        ->select('questionaries.question', 'summaries.*')
+        ->orderBy('questionaries.updated_at', 'DESC')
+        ->paginate(10);
 
-// updateメソッドを呼び出し
-$accessCounter->update(['counter' => $counter], ['id' => 0]);
-        //dd($counter);
-    }
-    else{
-    // AccessCounterモデルをインスタンス化
-$accessCounter = new AccessCounter();
-
-// updateメソッドを呼び出し
-$accessCounter->update(['counter' => $counter], ['id' => $user['id']]);
-    };
-
-    $categories = Category::get();
-    $questions=Questionaries::orderBy('created_at', 'DESC')->take(5)->get();
-    $i=count($questions);
-    $counts=AccessCounter::get();
-    $count = $counts->first();
-    $date=$count->date;
-    $counter=$count->counter;
-    $today=Carbon::today()->toDateString();
-    
-
-    if($date==$today){
-
-    }else{
-        $counter++;
-        $count->date = $today;
-        $count->counter = $counter;
-        $count->save();
-}
-
-        for($a=0; $a<$i; $a++){
-            $summaries[]=Summaries::where('id', $questions[$a]['id'])->get();  
-        };
-        
-        if(empty($summaries)){
-        return view('welcome', compact('user','questions','categories','counter'));
-        }else{
-        return view('welcome', compact('user','questions','categories','summaries','counter'));
-        };
+    return view('welcome', compact('questions','counter'));
 });
 
 Auth::routes();

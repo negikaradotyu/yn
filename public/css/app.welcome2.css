@@ -161,3 +161,21 @@ body {
 .content{
   margin-bottom: 10px;
 }
+
+.btn-vote {
+  text-align: right;
+}
+
+.btn-vote input[type="submit"] {
+  margin-right: 20px;
+}
+
+.links{
+  text-align: center;
+  vertical-align: middle;
+}
+
+svg{
+  width:20px;
+  height: 20px;
+}

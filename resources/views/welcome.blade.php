@@ -2,16 +2,20 @@
 
 @section('content5')
     <div class="categories">
+        @guest
+        <p>Loginが必要</p>
+        @else
         @foreach($categories as $category)
         <a href="category{{ $category['category'] }}">{{ $category['name'] }}</a>
         @endforeach
-
-    </div>
+        @endguest
+    </div> @guest<p> </p>
+    @else
     <form action="/search" method="GET" class="search-form">
         <textarea name="search" rows="1" cols="10"></textarea>
         <input type="submit" value="検索">
     </form>
-
+    @endguest
 @endsection
 
 @section('content2')
@@ -37,7 +41,7 @@
                     <input type='hidden' name='user_id' value=0>
                     <input  type="hidden" name="answer"  value=0>
                     <textarea maxlength=50 class="form-control"  name="question" rows="2" placeholder="enter a question, 上限50文字"></textarea>
-                    <div class="phrase"><p>あなたの答え</p>
+                    <div class="phrase"><p>あなたの投票</p>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="answer" id="yesOption_global" value="1">
                         <label class="form-check-label" for="yesOption_global">Yes</label>
@@ -68,58 +72,49 @@
 @endsection
 
 @section('content3')
-
+<main class="main-menus">
 <form method='POST' action="/kekka" name="kekka">    
     @csrf
-
-         <!-- {{$a=0}} -->
-    <div class="question"> 
-    <table class="question-table">
-            <tr>
-                <th class="waku1">議題</th>
-                <th class="waku3">Yes</th>
-                <th class="waku3">No</th>
-                <th class="waku4">Total</th>
-                <th class="waku5">投票</th>
-            </tr>
-            @csrf
-            <!-- {{$a=0}} -->
-            @foreach($questions as $question) 
-            <!-- {{$done=0}} -->
-                <input type='hidden' name='user_id' value=0>
-                <tr>
-                <td><div class="gidai">{{$question['question']}}</div></td>
-
-                <td class="centerize"><?php echo $summaries[$a][0]['yes']; ?></td>
-                <td class="centerize"><?php echo $summaries[$a][0]['no']; ?></td>
-                <td class="centerize"><?php echo $summaries[$a][0]['total']; ?></td>
+    <table class=menu-object>
+    <tr>
+        <th rowspan="2" class="waku1">議題</th>
+        <th colspan="3" class="waku2">投票数</th>
+        <th rowspan="2" class="waku5">投票</th>
+    </tr>
+    <tr>
+        <th class="waku3">Yes</th>
+        <th class="waku3">No</th>
+        <th class="waku4">Total</th>
+    </tr>
+    @foreach($questions as $question)
+        <input type='hidden' name='user_id' value=0>
+        <tr>
+            <input type='hidden' name='question_id' value="{{ $question->id }}">
+                <td><p>{{ $question->question }}</p></td>
+                <td class="centerize"><?php echo $question->yes; ?></td>
+                <td class="centerize"><?php echo $question->no; ?></td>
+                <td class="centerize"><?php echo $question->total; ?></td>
                 <td  class="centerize">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="{{ $question['id'] }}" id="yesOption_{{ $question['id'] }}" value="1">
-                    <label id="a" class="form-check-label" for="yesOption_{{ $question['id'] }}">Yes</label>
-                    </div>
-
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="{{ $question['id'] }}" id="noOption_{{ $question['id'] }}" value="2">
-                    <label  id="a" class="form-check-label" for="noOption_{{ $question['id'] }}">No</label>
+                    <input class="form-check-input" type="radio" name="{{ $question->id}}" id="yesOption_{{ $question->id}}" value="1">
+                    <label class="form-check-label" for="yesOption_{{ $question->id }}">Yes</label>
                     </div>
-
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="{{ $question['id'] }}" id="invalidOption_{{ $question['id'] }}" value="0">
-                    <label  id="a" class="form-check-label" for="invalidOption_{{ $question['id'] }}">無効</label>
-                </div>
+                    <input class="form-check-input" type="radio" name="{{ $question->id}}" id="noOption_{{ $question->id }}" value="2">
+                    <label class="form-check-label" for="noOption_{{ $question->id }}">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{ $question->id }}" id="invalidOption_{{$question->id }}" value="0">
+                    <label class="form-check-label" for="invalidOption_{{ $question->id }}">無効</label>
+                    </div>
                 </td>
-                </tr>
-                <!-- {{$a++}} -->
-            @endforeach
-        </table>
-    </div>  
-    <div class="menu-subject">
-    <input class="btn btn-primary" type="submit" value="一括投票">
-    </div>  
+    @endforeach
+</table>
+    <div class="btn-vote">  
+    <input class="btn btn-primary " type="submit" value="一括投票">
+    </div>
 </form>
-
-
+<div class="links">{{ $questions->links() }}</div>
 
 @endsection
 
