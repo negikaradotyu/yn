@@ -22,7 +22,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')
+        ->except('post', 'keijiban', 'category','search','home');
         $this->middleware(function ($request, $next) {
             Session::start();
             return $next($request);
@@ -80,8 +81,13 @@ class HomeController extends Controller
     public function category($category)
     {   
         $user = \Auth::user();
+        if (!$user) {
+            $user = (object) [
+                'id' => 0,
+                'name' => 'guest'
+            ];
+        }
         $choose=Category::where('choose',$category)->first();
-        dd($choose);
         // get counter
         $categories=Category::get();
         $counts=AccessCounter::get();
@@ -91,16 +97,23 @@ class HomeController extends Controller
         $questions = DB::table('questionaries')
         ->join('summaries', 'questionaries.id', '=', 'summaries.id')
         ->select('questionaries.question', 'summaries.*')
-        ->where('questionaries.category', $choose)
+        ->where('questionaries.category', $choose['choose'])
         ->orderBy('questionaries.updated_at', 'DESC')
         ->paginate(10);
         //records
-        $records = DB::table('questionaries')
-        ->join('records', 'questionaries.id', '=', 'records.question_id')
-        ->select('questionaries.*', 'records.user_id', 'records.question_id')
-        ->where( 'records.user_id',$user['id'])
-        ->get();
-        //dd($records);
+        if($user->id<>0) {
+            $records = DB::table('questionaries')
+            ->join('records', 'questionaries.id', '=', 'records.question_id')
+            ->select('questionaries.*', 'records.user_id', 'records.question_id')
+            ->where( 'records.user_id',$user['id'])
+            ->get();
+        }else{
+            $records = DB::table('questionaries')
+            ->join('records', 'questionaries.id', '=', 'records.question_id')
+            ->select('questionaries.*', 'records.user_id', 'records.question_id')
+            ->where('records.user_id', '!=', $user->id)
+            ->get();
+        }  
         return view('category', compact('choose','categories','records','user','questions','counter'));        
     }
 }

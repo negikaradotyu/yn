@@ -5,7 +5,7 @@
     
 <div class="categories">
         @foreach($categories as $category)
-            <a href="category{{ $category['category'] }}">{{ $category['name'] }}</a>
+            <a href="category{{ $category['category'] }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
         @endforeach
 
     </div>

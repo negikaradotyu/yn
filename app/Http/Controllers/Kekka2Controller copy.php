@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Questionaries;
-use Illuminate\Support\Facades\Auth; // Authクラスを追加
 use App\Models\Category;
 use App\Models\Summaries;
 use App\Models\Records;
 use Hamcrest\Type\IsNumeric;
 
-class KekkaController extends Controller
+class Kekka2Controller extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,21 +27,18 @@ class KekkaController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
    
-    public function kekka(Request $request)
+    public function kekka2(Request $request, $category)
     {
-    // not login but reflect to summaries table
-    if (!Auth::check()) {
-        // ログインしていない場合の処理
-
-        // セッションに一括投票データを保存
-        $request->session()->put('bulk_vote_data', $request->all());
-        dd($request);
-        return redirect()->route('welcome'); // もしくは別の適切なルートにリダイレクト
-    }
-
-    //if login,
+        //dd($category);
         $data=$request->all();
+        dd($data);
         $user = \Auth::user();
+        if (!$user) {
+            $user = (object) [
+                'id' => 0,
+                'name' => 'guest'
+            ];
+        }
         $keys=array_keys($data);
         //dd($data);
             foreach($keys as $key){
@@ -54,13 +50,17 @@ class KekkaController extends Controller
                         Summaries::where('id', $key)->update(['yes' => $yes]);
                         Summaries::where('id', $key)->update(['total' => $total]);
                         Questionaries::where('id', $key)->update(['total' => $total]);
-
                         //$yes=[];
-                        $records=Records::insertGetId([
-                            'user_id'=> $user['id'],
-                            'question_id'=> $key,
-                            'yes'=> 1
+                        if($user['id']<>0){
+                            $records=Records::insertGetId([
+                                'user_id'=> $user['id'],
+                                'question_id'=> $key,
+                                'yes'=> $yes,
+                                'no'=> $total
                         ]);
+                    }else{
+                        
+                    }
 
                     }elseif($data[$key]==2){
                         $all=Summaries::where('id', $key)->get();
@@ -70,15 +70,17 @@ class KekkaController extends Controller
                         Summaries::where('id', $key)->update(['total' => $total]);
                         Questionaries::where('id', $key)->update(['total' => $total]);
                         //$yes=[];
-                        $record=Records::insertGetId([
+                        $records=Records::insertGetId([
                             'user_id'=> $user['id'],
                             'question_id'=> $key,
-                            'no'=>1
+                            'yes'=> $no,
+                            'no'=> $total
                         ]);
                     }else{};
                 };
+
             };
-        return redirect()->route('post', compact('user'));
+            return redirect()->route('category', ['category' => $category])->with('user', $user);
     }
     
 };

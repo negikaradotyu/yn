@@ -13,7 +13,7 @@ use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-class HomeController extends Controller
+class WelcomeController extends Controller
 {
     public function index(Request $request)
     {   

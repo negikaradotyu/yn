@@ -31,7 +31,6 @@ class MypageController extends Controller
     {   
         $user = \Auth::user();
         $categories = Category::get();
-        $questions=Questionaries::where('user_id', $user['id'])->orderBy('created_at', 'DESC')->paginate(5);
         $counts=AccessCounter::get();
         $count = $counts->first();
         $counter=$count->counter;
@@ -40,7 +39,12 @@ class MypageController extends Controller
         ->select('questionaries.*', 'summaries.total')
         ->where('questionaries.user_id', '=', $user['id'])
         ->orderBy('questionaries.created_at', 'DESC')
-        ->paginate(5);
+        ->paginate(10);
+
+        // change created_at->Carbon instance
+        foreach ($questions as $question) {
+            $question->created_at = \Carbon\Carbon::parse($question->created_at);
+        }
 
         $summaries = DB::table('questionaries')
         ->join('summaries', 'questionaries.id', '=', 'summaries.id')
@@ -48,14 +52,16 @@ class MypageController extends Controller
         ->where('questionaries.user_id', '=', $user['id'])
         ->orderBy('questionaries.created_at', 'DESC')
         ->get();
-
-        //dd($summaries);
-        if ($questions !== null) {
-            return view('mypage', compact('counter','summaries','questions','count', 'categories', 'user'));
-        } else {
-            return view('post');
-        }
+        $choose['name']="My Page";
+        //the number of your vote from Records DB
+        $num=Records::where('user_id',$user['id'])->get();
+        $theNum=count($num);
+        //the rate of vote from questionaries DB
+        $theNumOfQuestionaries=Questionaries::get();
         
+        $theNum2=count($theNumOfQuestionaries);
+        $rateOfVote=number_format($theNum/$theNum2*100,1);
+            return view('mypage', compact('rateOfVote', 'theNum', 'counter','summaries','questions','count', 'categories', 'user','choose'));
     
     }
 }

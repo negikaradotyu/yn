@@ -1,0 +1,76 @@
+.time{
+    width: 15%;
+}
+
+.wakuYour{
+    width: 10%;
+}
+
+th{
+    vertical-align: middle;
+}
+
+.menu-title4{
+    margin: 5px;
+    font-size: 20px;
+    padding: 5px;
+    color: darkblue;
+    font-weight: 800;
+    background-color: darkseagreen;
+}
+
+.paginate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.allvotes{
+    display: flex;
+    justify-content: center; /* 横方向の中央揃え */
+    align-items: center; /* 縦方向の中央揃え */
+    text-align: center;
+    font-size: 20px;
+    padding: 3px 10px;
+}
+
+.allvotes a {
+    display: inline-block;
+    padding: 3px 10px;
+    background-color: rgb(225, 215, 85);
+    color:darkblue;
+
+}
+.container {
+    display: flex; /* もしくは display: grid; */
+    justify-content: flex-end; /* 横方向の右揃え */
+}
+.caution{
+    margin-right: 50px;
+    color: red; 
+    background-color: rgb(225, 215, 85);
+    font-weight:700;
+    padding: 3px;
+
+}
+
+td{
+    vertical-align: middle;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+
+span.relative {
+    margin: 0 5px !important;
+}
+a.relative {
+    margin: 0 5px !important;
+}
+

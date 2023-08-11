@@ -2,20 +2,14 @@
 
 @section('content5')
     <div class="categories">
-        @guest
-        <p>Loginが必要</p>
-        @else
         @foreach($categories as $category)
-        <a href="category{{ $category['category'] }}">{{ $category['name'] }}</a>
+        <a href="category{{ $category['category'] }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
         @endforeach
-        @endguest
-    </div> @guest<p> </p>
-    @else
+    </div>
     <form action="/search" method="GET" class="search-form">
         <textarea name="search" rows="1" cols="10"></textarea>
         <input type="submit" value="検索">
     </form>
-    @endguest
 @endsection
 
 @section('content2')
@@ -73,7 +67,7 @@
 
 @section('content3')
 <main class="main-menus">
-<form method='POST' action="/kekka" name="kekka">    
+<form method='POST' action="/kekka3" name="kekka3">    
     @csrf
     <table class=menu-object>
     <tr>
@@ -90,7 +84,7 @@
         <input type='hidden' name='user_id' value=0>
         <tr>
             <input type='hidden' name='question_id' value="{{ $question->id }}">
-                <td><p>{{ $question->question }}</p></td>
+                <td><p><i class="fa-regular fa-comment"></i>{{ $question->question }}</p></td>
                 <td class="centerize"><?php echo $question->yes; ?></td>
                 <td class="centerize"><?php echo $question->no; ?></td>
                 <td class="centerize"><?php echo $question->total; ?></td>

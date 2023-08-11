@@ -5,6 +5,8 @@
 }
 .waku1 {
   width: 45%;
+  padding: 10px;
+  font-size: 20px;
 }
 .waku2 {
   width: 20%;
@@ -47,13 +49,14 @@ td.centerize {
 
 }
 
-td {
-  text-align: center;
+td{
+  text-align: left;
   border-bottom: 1px solid rgb(167, 160, 18);
 }
 .gidai{
   text-align: left;
-  padding: 5px;
+  padding: 2px 0 2px 15px;
+
 }
 .fa-brands{
   margin-right: 5px;

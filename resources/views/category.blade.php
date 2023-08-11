@@ -2,7 +2,7 @@
 
 @section('category')
 <main class="main-menus">
-<form method='POST' action="/kekka2/{{$choose}}">
+<form method='POST' action="/kekka2">
 @csrf
 <table class=menu-object>
     <tr>
@@ -15,26 +15,30 @@
         <th class="waku3">No</th>
         <th class="waku4">Total</th>
     </tr>
-        <input type='hidden' name='choose' value="{{ $choose['name']}}">
+        <input type='hidden' name='choose' value="{{$choose}}">
     @foreach($questions as $question)
-        <input type='hidden' name='user_id' value="{{ $user['id'] }}">
+        <input type='hidden' name='user_id' value="{{ $user->id }}">
         <tr>
             <input type='hidden' name='question_id' value="{{ $question->id }}">
-                <td><p>{{ $question->question }}</p></td>
+                <td><p><i class="fa-regular fa-comment"></i>{{ $question->question }}</p></td>
                 <td class="centerize"><?php echo $question->yes; ?></td>
                 <td class="centerize"><?php echo $question->no; ?></td>
                 <td class="centerize"><?php echo $question->total; ?></td>
                 @php
                     $d = 0;
                 @endphp
-                @foreach($records as $record)
-                    @if($record->id==$question->id)
-                    @php
-                $d = 1; 
-            @endphp
-                    @break
-                    @endif
-                @endforeach
+                @if($user->id==0)
+                
+                @else
+                    @foreach($records as $record)
+                        @if($record->id==$question->id)
+                            @php
+                                $d = 1; 
+                            @endphp
+                            @break
+                        @endif
+                    @endforeach
+                @endif
                 @if($d==1)
                     <td class="centerize">投票済み</td>
                 @else($d==0)
@@ -66,9 +70,9 @@
 @section('content')
     <div class="categories">
     @foreach($categories as $category)
-    <a href="{{ route('category', ['category' => $category['choose'], 'user' => $user]) }}">{{ $category['name'] }}</a>
+    <a href="{{ route('category', ['category' => $category['choose'], 'user' => $user]) }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
 @endforeach
-        <a href="/home">Go to Home</a>
+        <a href="/home"><i class="fa-solid fa-house-crack"></i>Go to Home</a>
         <form action="/search" method="GET" class="search-form">
         <textarea name="search" rows="1" cols="10"></textarea>
         <input type="submit" value="検索">

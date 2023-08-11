@@ -26,29 +26,32 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     $count = AccessCounter::get()->first();
     $counter=$count['counter']+1;
+    $categories = Category::get();
     $accessCounter = new AccessCounter();
     $accessCounter->update(['counter' => $counter], ['id' => 0]);
     $questions = DB::table('questionaries')
         ->join('summaries', 'questionaries.id', '=', 'summaries.id')
         ->select('questionaries.question', 'summaries.*')
-        ->orderBy('questionaries.updated_at', 'DESC')
+        ->orderBy('questionaries.created_at', 'DESC')
         ->paginate(10);
+    $user=\Auth::user();
 
-    return view('welcome', compact('questions','counter'));
-});
+    return view('welcome', compact('questions','counter','categories','user'));
+})->name('welcome');;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('post');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('post')->middleware('allow.guest:post,other_route1,other_route2');;
 Route::post('/store', [App\Http\Controllers\PostingController::class, 'store'])->name('store');
 Route::post('/kekka', [App\Http\Controllers\KekkaController::class, 'kekka'])->name('kekka');
-Route::post('/kekka2/{category}', [App\Http\Controllers\Kekka2Controller::class, 'kekka2'])->name('kekka2');
-Route::get('/category/{category}', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
+Route::post('/kekka2', [App\Http\Controllers\Kekka2Controller::class, 'kekka2'])->name('kekka2');
+Route::post('/kekka3', [App\Http\Controllers\Kekka3Controller::class, 'kekka3'])->name('kekka3');
+Route::get('/category/{category}', [App\Http\Controllers\HomeController::class, 'category'])->name('category')->middleware('allow.guest:category,other_route1,other_route2');
 
-Route::get('/top10', [App\Http\Controllers\HomeController::class, 'topten'])->name('topten');
+Route::get('/top10', [App\Http\Controllers\HomeController::class, 'topten'])->name('topten')->middleware('allow.guest:topten,other_route1,other_route2');
 Route::get('/mypage/{id}', [App\Http\Controllers\MypageController::class, 'mypage'])->name('mypage');
 Route::get('/allvotes', [App\Http\Controllers\AllController::class, 'allvotes'])->name('allvotes');
-Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
-Route::get('/keijiban', [App\Http\Controllers\KeijibanController::class, 'keijiban'])->name('keijiban');
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search')->middleware('allow.guest:search,other_route1,other_route2');
+Route::get('/keijiban', [App\Http\Controllers\KeijibanController::class, 'keijiban'])->name('keijiban')->middleware('allow.guest:keijiban,other_route1,other_route2');
 Route::post('/toko', [App\Http\Controllers\KeijibanController::class, 'toko'])->name('toko');
 

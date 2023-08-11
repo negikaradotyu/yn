@@ -30,11 +30,18 @@
   font-size: 64px;
   font-weight: bold;
 }
-
+@font-face {
+  font-family: 'Moyashimon'; /* フォントの名前 */
+  src: url('../font/daiji_moyashimon.ttf') format('truetype'); /* フォントファイルへのパスと形式 */
+  /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
+}
 .yes{
   text-align: center;
   font-weight: 700;
+  font-family: 'Moyashimon', sans-serif; /* 使用するカスタムフォントの指定 */
+  
 }
+
 
 
 /* 投票者数のスタイル */

@@ -11,67 +11,115 @@ use Hamcrest\Type\IsNumeric;
 
 class Kekka2Controller extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-   
-    public function kekka2(Request $request, $category)
+    public function kekka2(Request $request)
     {
         //dd($category);
         $data=$request->all();
         //dd($data);
-        $user = \Auth::user();
+        $chooseJson = $data['choose'];
+        $chooseArray = json_decode($chooseJson, true);
         
-        $keys=array_keys($data);
-        //dd($data);
-            foreach($keys as $key){
-                if(is_numeric($key)){
-                    if($data[$key]==1){
-                        $all=Summaries::where('id', $key)->get();
-                        $yes=$all[0]['yes']+1;
-                        $total=$all[0]['total']+1;
-                        Summaries::where('id', $key)->update(['yes' => $yes]);
-                        Summaries::where('id', $key)->update(['total' => $total]);
-                        Questionaries::where('id', $key)->update(['total' => $total]);
-                        //$yes=[];
-                        $records=Records::insertGetId([
-                            'user_id'=> $user['id'],
-                            'question_id'=> $key,
-                            'yes'=> $yes,
-                            'no'=> $total
-                        ]);
+        $choose = $chooseArray['choose']; // "politics"
 
-                    }elseif($data[$key]==2){
-                        $all=Summaries::where('id', $key)->get();
-                        $no=$all[0]['no']+1;
-                        $total=$all[0]['total']+1;
-                        Summaries::where('id', $key)->update(['no' => $no]);
-                        Summaries::where('id', $key)->update(['total' => $total]);
-                        Questionaries::where('id', $key)->update(['total' => $total]);
-                        //$yes=[];
-                        $records=Records::insertGetId([
-                            'user_id'=> $user['id'],
-                            'question_id'=> $key,
-                            'yes'=> $no,
-                            'no'=> $total
-                        ]);
-                    }else{};
-                };
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                $summaryId = intval($key);
+                $voteType = intval($value);
 
-            };
-            return redirect()->route('category', ['category' => $category])->with('user', $user);
+                if ($voteType === 1) {
+                    Summaries::where('id', $summaryId)->increment('yes');
+                } elseif ($voteType === 2) {
+                    Summaries::where('id', $summaryId)->increment('no');
+                }
+
+                Summaries::where('id', $summaryId)->increment('total');
+            }
+        }
+
+        $user = \Auth::user();
+        if (!$user) {
+            $user = (object) [
+                'id' => 0,
+                'name' => 'guest'
+            ];
+        }
+
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                $questionId = intval($key);
+                $voteType = intval($value);
+
+                $existingRecord = Records::where('user_id', $user->id)
+                    ->where('question_id', $questionId)
+                    ->first();
+
+                if (!$existingRecord) {
+                    $newRecordId = Records::insertGetId([
+                        'user_id' => $user->id,
+                        'question_id' => $questionId,
+                    ]);
+                }
+
+                $record = Records::where('user_id', $user->id)
+                    ->where('question_id', $questionId)
+                    ->first();
+
+                if ($record) {
+                    if ($voteType === 1) {
+                        $record->yes = $record->yes ? $record->yes + 1 : 1;
+                        $record->total = $record->total ? $record->total + 1 : 1;
+                    } elseif ($voteType === 2) {
+                        $record->no = $record->no ? $record->no + 1 : 1;
+                        $record->total = $record->total ? $record->total + 1 : 1;
+                    }
+
+                    $record->save();
+                }
+            }
+        }
+
+
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                $questionId = intval($key);
+                $voteType = intval($value);
+
+                if ($user->id !== 0) {
+                    $existingRecord = Records::where('user_id', $user->id)
+                        ->where('question_id', $questionId)
+                        ->first();
+
+                    if (!$existingRecord) {
+                        $newRecordId = Records::insertGetId([
+                            'user_id' => $user->id,
+                            'question_id' => $questionId,
+                        ]);
+                    }
+                }
+
+                $record = Records::where('user_id', $user->id)
+                    ->where('question_id', $questionId)
+                    ->first();
+
+                if ($record) {
+                    if ($voteType === 1) {
+                        $record->yes = $record->yes ? $record->yes + 1 : 1;
+                        $record->total = $record->total ? $record->total + 1 : 1;
+                    } elseif ($voteType === 2) {
+                        $record->no = $record->no ? $record->no + 1 : 1;
+                        $record->total = $record->total ? $record->total + 1 : 1;
+                    }
+
+                    $record->save();
+                }
+            }
+        }
+
+
+
+        return redirect()->route('category', ['category' => $choose]);
+
+            //return view('category',compact('choose','questions','user'));
     }
     
 };

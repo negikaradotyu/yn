@@ -4,3 +4,17 @@ td p{
 .waku1{
     text-align: left;
 }
+
+td{
+    vertical-align: middle;
+}
+
+@font-face {
+    font-family: 'Moyashimon'; /* フォントの名前 */
+    src: url('../font/moyashimon-font.ttf') format('truetype'); /* フォントファイルへのパスと形式 */
+    /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
+  }
+
+  .yes {
+    font-family: 'Moyashimon', sans-serif; /* 使用するカスタムフォントの指定 */
+  }
