@@ -1,19 +1,16 @@
 @extends('layouts.app2')
 
 @section('content') 
-    
-    
 <div class="categories">
-        @foreach($categories as $category)
-            <a href="category{{ $category['category'] }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
-        @endforeach
-
-    </div>
-    <form action="/search" method="GET">
-  <textarea class="from-control" name="search" rows="1" cols="10"></textarea>
-  <br>
-  <input type="submit" value="検索">
-</form>
+    @foreach($categories as $category)
+    <a href="{{ route('category', ['category' => $category['choose'], 'user' => $user]) }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
+@endforeach
+        <a href="/home"><i class="fa-solid fa-house-crack"></i>Go to Home</a>
+        <form action="/search" method="GET" class="search-form">
+            <textarea name="search" rows="1" cols="10"></textarea>
+            <input type="submit" value="検索">
+        </form>
+</div>
 
 @endsection
 
@@ -38,23 +35,23 @@
                     @csrf
                 <input type='hidden' name='user_id' value="{{ $user['id'] }}">
                 <input type='hidden' name='user_name' value="{{ $user['name'] }}">
-                <textarea class="form-control"  name="toko" rows="1" placeholder="自由にどうぞ"></textarea>    
+                <textarea class="form-control"  name="toko" rows="1" placeholder="自由にどうぞ（上限50文字)" maxlength="50"></textarea>    
                 <input class="btn btn-primary" type="submit" value="投稿">
             </form>
         </div>
         <div class="ichiran">
-            <table>
+            <table class="commentban">
                 <tr>
-                <th class="column1" >ID</th>
-                <th class="column2">Comment</th>
-                <th class="column3">Date</th>
+                    <th class="column1">ID</th>
+                    <th class="column2">Comment</th>
+                    <th class="column3">Date</th>
                 </tr>
                 
                 @foreach($comments as $comment)
                 <tr>
-                    <td>{{$comment['user_name']}}</td>
+                    <td class="centerize">{{$comment['user_name']}}</td>
                     <td>{{$comment['comment']}}</td>
-                    <td>{{$comment['created_at']}}</td> 
+                    <td class="centerize">{{$comment['created_at']->format('Y-m-d')}}</td> 
                 </tr>
                 @endforeach
                 

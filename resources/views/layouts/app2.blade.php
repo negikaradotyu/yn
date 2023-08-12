@@ -82,7 +82,7 @@
     <div class="side-menu">
         <div class="categories">
             <div class="subtitle">
-                <p>Categories</p>
+                <p><i class="fa-regular fa-folder"></i>Categories</p>
             </div>
         </div>
         <div class="content">
@@ -92,7 +92,7 @@
     <div class="main-menu">
         <div class="profile">
             <div class="subtitle">
-                <p>{{$choose['name']}}</p>
+                <p><i class="fa-regular fa-folder"></i>{{$choose['name']}}</p>
             </div>
             <div class="content">
                 @yield('category')

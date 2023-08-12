@@ -1,7 +1,6 @@
 .categories {
   display: flex;
   flex-direction: column; /* 通常時に縦並びに配置 */
-  margin-left: 5px;
 }
 
 .categories a {

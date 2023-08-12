@@ -12,11 +12,18 @@ td{
     font-family: 'Moyashimon'; /* フォントの名前 */
     src: url('../font/moyashimon-font.ttf') format('truetype'); /* フォントファイルへのパスと形式 */
     /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
+    font-family: 'uniquefont'; /* フォントの名前 */
+    src: url('../font/uniquefont.ttf') format('truetype'); /* フォントファイルへのパスと形式 */
+    /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
+    font-family: 'uniquefont2'; /* フォントの名前 */
+    src: url('../font/uniquefont2.otf') format('truetype'); /* フォントファイルへのパスと形式 */
+    /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
   }
 
-  .yes {
-    font-family: 'Moyashimon', sans-serif; /* 使用するカスタムフォントの指定 */
+  .yes, .sub, .subtitle {
+    font-family: 'mukasi', sans-serif; /* 使用するカスタムフォントの指定 */
   }
+  
 
   /* 掲示板CSS */
   @font-face {
@@ -45,23 +52,46 @@ td{
     height: 100vh;
     margin-left: 10px;
     font-family: mukasi;
+    width: auto;
   }
   .commentform{
     margin: 10px 20px;
   }
-  .form-control{
-    resize: none;
-    width: 240px;
-    height: 20px;
-  }
 
   .column1{
-    width: 15%;
+    width: 20%;
   }
 
   .column2{
-    width: 55%;
+    width: 60%;
   }
-  .column1{
-    width: 30%;
+  .column3{
+    width: 20%;
+  }
+
+  .ichiran{
+    width: auto;
+  }
+
+  .commentform {
+    display: flex;
+    align-items: center;
+}
+
+.commentform form {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* To make the form take up available space */
+}
+
+.form-control {
+    flex-grow: 1; /* To make the textarea take up available space */
+    vertical-align: middle;
+    margin-left: 15px;
+    resize: none;
+  }
+
+  .commentban{
+    width: 100%;
+    margin-right: 10px;
   }

@@ -42,6 +42,9 @@ class KeijibanController extends Controller
         $choose['name']="掲示板";
         $categories = Category::get();
         $comments=Keijiban::orderby('created_at', 'DESC')-> paginate(20);
+        foreach ($comments as $comment) {
+            $comment->created_at = \Carbon\Carbon::parse($comment->created_at);
+        }
         return view('keijiban', compact('choose', 'counter', 'categories', 'user', 'comments'));
     }
 
