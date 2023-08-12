@@ -68,10 +68,17 @@
                                 @csrf
                             </form>
                         </div>
-                        
+                        <a href="/keijiban">
+                            掲示板
+                        </a>  
+                    </li>              
                     </li>
-                @endguest
                 
+
+
+
+                @endguest
+
     </ul>
 
 </div>

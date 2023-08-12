@@ -1,12 +1,11 @@
-td p{
-    text-align: left;
-}
+
 .waku1{
     text-align: left;
 }
 
 td{
     vertical-align: middle;
+    padding: 2px 0 2px 15px;
 }
 
 @font-face {
@@ -17,4 +16,52 @@ td{
 
   .yes {
     font-family: 'Moyashimon', sans-serif; /* 使用するカスタムフォントの指定 */
+  }
+
+  /* 掲示板CSS */
+  @font-face {
+    font-family: 'mukasi'; /* フォントの名前 */
+    src: url('../font/gomarice_mukasi_mukasi.ttf') format('truetype'); /* フォントファイルへのパスと形式 */
+    /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
+  }
+  .info {
+    font-family: mukasi;
+    margin: 10px;
+  }
+  .notice{
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid rgb(134, 126, 23);
+    margin: 0 10px;
+    height: 100px;
+
+  }
+  .title{
+    font-size: 20px;
+    margin-top: 5px;
+  }
+
+  .ban{
+    height: 100vh;
+    margin-left: 10px;
+    font-family: mukasi;
+  }
+  .commentform{
+    margin: 10px 20px;
+  }
+  .form-control{
+    resize: none;
+    width: 240px;
+    height: 20px;
+  }
+
+  .column1{
+    width: 15%;
+  }
+
+  .column2{
+    width: 55%;
+  }
+  .column1{
+    width: 30%;
   }

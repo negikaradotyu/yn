@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Category;
+use App\Models\AccessCounter;
 
 
 use Illuminate\Support\Facades\Session;
@@ -35,9 +36,13 @@ class KeijibanController extends Controller
     public function keijiban()
     {   
         $user = \Auth::user();
+        $counts=AccessCounter::get();
+        $count = $counts->first();
+        $counter=$count->counter;
+        $choose['name']="掲示板";
         $categories = Category::get();
         $comments=Keijiban::orderby('created_at', 'DESC')-> paginate(20);
-        return view('keijiban', compact('categories', 'user', 'comments'));
+        return view('keijiban', compact('choose', 'counter', 'categories', 'user', 'comments'));
     }
 
     public function toko(Request $request){
