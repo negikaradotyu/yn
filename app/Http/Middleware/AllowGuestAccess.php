@@ -16,9 +16,12 @@ class AllowGuestAccess
     public function handle(Request $request, Closure $next)
     {
         // 特定のルート（例: welcome）に対してログイン制御を無効にする
-        if ($request->routeIs('welcome')) {
+        
+        //dd('Reached the allow.guest middleware for "home" route.', $request->routeIs('home'));
+        if ($request->routeIs('index')) {
             return $next($request);
         }
+        //dd('Reached the allow.guest middleware for "home" route.', $request->routeIs('home'));
 
         if ($request->routeIs('post')) {
             return $next($request);
@@ -34,7 +37,11 @@ class AllowGuestAccess
         if ($request->routeIs('search')) {
             return $next($request);
         }
-        if ($request->routeIs('top10')) {
+        if ($request->routeIs('topten')) {
+            return $next($request);
+        }
+        
+        if ($request->routeIs('mikaito')) {
             return $next($request);
         }
         // ログイン状態をチェックし、制御を行う

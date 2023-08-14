@@ -20,8 +20,8 @@ td{
     /* 他のフォント属性（font-weight、font-styleなど）も設定できます */
   }
 
-  .yes, .sub, .subtitle {
-    font-family: 'mukasi', sans-serif; /* 使用するカスタムフォントの指定 */
+  .sub, .subtitle {
+    font-family: 'uniquefont', sans-serif; /* 使用するカスタムフォントの指定 */
   }
   
 

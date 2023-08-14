@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth')
-        ->except('post', 'keijiban', 'category','search','home');
+        ->except('topten', 'mikaito','index', 'post', 'keijiban', 'category','search','home');
         $this->middleware(function ($request, $next) {
             Session::start();
             return $next($request);
@@ -38,13 +38,15 @@ class HomeController extends Controller
     public function index(Request $request)
     {   
         $user = \Auth::user();
+        
+        if (!$user) {
+            $user = (object) [
+                'id' => 0,
+                'name' => 'guest'
+            ];
+        }
         $categories = Category::get();
-        $questions=Questionaries::orderBy('created_at', 'DESC')->take(5)->get();
-        $i=count($questions);
-        $records=Records::where('user_id', $user['id'])->get();
-        //dd($records);
-        //dd($questions);
-    //access counter
+        
         $counts=AccessCounter::get();
         $count = $counts->first();
         $date=$count->date;
@@ -52,29 +54,44 @@ class HomeController extends Controller
         $ui=$count->id;
         $today=Carbon::today()->toDateString();
         
-
-        if($date==$today && $ui==$user['id']){
-
-        }else{
+        //if $user id=0, $counter++;
+        if($user->id==0){
             $counter++;
-            $count->id = $user['id'];
+            $count->id = 0;
             $count->date = $today;
             $count->counter = $counter;
             $count->save();
-    }
+        }elseif($date==$today && $ui==$user['id']){
 
-            for($a=0; $a<$i; $a++){
-                $summaries[]=Summaries::where('id', $questions[$a]['id'])->get();  
-            };
-            
-            if(empty($summaries)){
-            return view('post', compact('records','user','questions','categories','counter'));
-            }else{
-            return view('post', compact('records','user','questions','categories','summaries','counter'));
-            };
+        }else{
+            $counter++;
+            $count->id = 0;
+            $count->date = $today;
+            $count->counter = $counter;
+            $count->save();
+        };
 
-
-
+        
+        $questions = DB::table('questionaries')
+        ->join('summaries', 'questionaries.id', '=', 'summaries.id')
+        ->select('questionaries.question', 'summaries.*')
+        ->orderBy('questionaries.created_at', 'DESC')
+        ->take(5)
+        ->get();
+        
+        if($user['id']>0) {
+            $records = DB::table('questionaries')
+            ->join('records', 'questionaries.id', '=', 'records.question_id')
+            ->select('questionaries.*', 'records.user_id', 'records.question_id')
+            ->where( 'records.user_id',$user['id'])
+            ->get();
+        }else{
+            $records = DB::table('questionaries')
+            ->join('records', 'questionaries.id', '=', 'records.question_id')
+            ->select('questionaries.*', 'records.user_id', 'records.question_id')
+            ->get();
+        }  
+        return view('post', compact('categories','records','user','questions','counter'));
     }
 
     
@@ -114,6 +131,39 @@ class HomeController extends Controller
             ->where('records.user_id', '!=', $user->id)
             ->get();
         }  
+        return view('category', compact('choose','categories','records','user','questions','counter'));        
+    }
+
+    //mikaito and topten
+    public function topten()
+    {   
+        $user = \Auth::user();
+        if (!$user) {
+            $user = (object) [
+                'id' => 0,
+                'name' => 'guest'
+            ];
+        }
+        $choose['name'] = "Top10";
+        // get counter
+        $categories=Category::get();
+        $counts=AccessCounter::get();
+        $count = $counts->first();
+        $counter=$count->counter;
+        //question, yes, no , total
+        $questions = DB::table('questionaries')
+        ->join('summaries', 'questionaries.id', '=', 'summaries.id')
+        ->select('questionaries.question', 'summaries.*')
+        ->orderBy('summaries.total', 'DESC')
+        ->take(10)
+        ->get();
+        //records
+            $records = DB::table('questionaries')
+            ->join('records', 'questionaries.id', '=', 'records.question_id')
+            ->select('questionaries.*', 'records.user_id', 'records.question_id')
+            ->where('records.user_id', '!=', $user->id)
+            ->get();
+        
         return view('category', compact('choose','categories','records','user','questions','counter'));        
     }
 }

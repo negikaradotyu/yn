@@ -52,6 +52,12 @@
                         <li>
                             <a  href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
+
+                        <li><a href="/keijiban">
+                            掲示板
+                        </a>  </li>
+
+
                     @endif
                 @else
                     <li class="member-menu">
