@@ -18,16 +18,6 @@ class KeijibanController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('web');
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            Session::start();
-            return $next($request);
-        });
-    }
-
     /**
      * Show the application dashboard.
      *

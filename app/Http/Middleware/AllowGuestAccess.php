@@ -40,10 +40,6 @@ class AllowGuestAccess
         if ($request->routeIs('topten')) {
             return $next($request);
         }
-        
-        if ($request->routeIs('mikaito')) {
-            return $next($request);
-        }
         // ログイン状態をチェックし、制御を行う
         if (auth()->check()) {
             return $next($request);

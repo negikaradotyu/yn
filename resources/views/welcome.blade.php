@@ -5,7 +5,15 @@
         @foreach($categories as $category)
         <a href="category{{ $category['category'] }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
         @endforeach
+        @guest
+        @else
+        <a href="/mikaito"><i class="fa-solid fa-clipboard"></i>未回答</a>
+        @endguest
+        
+    <a href="/topten"><i class="fa-solid fa-clipboard"></i>Top10</a>
+    <a href="/home"><i class="fa-solid fa-house-crack"></i>Go to Home</a>
     </div>
+
     <form action="/search" method="GET" class="search-form">
         <textarea name="search" rows="1" cols="10"></textarea>
         <input type="submit" value="検索">

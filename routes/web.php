@@ -49,7 +49,7 @@ Route::post('/kekka3', [App\Http\Controllers\Kekka3Controller::class, 'kekka3'])
 Route::get('/category/{category}', [App\Http\Controllers\HomeController::class, 'category'])->name('category')->middleware('allow.guest:category,other_route1,other_route2');
 
 Route::get('/topten', [App\Http\Controllers\HomeController::class, 'topten'])->name('topten')->middleware('allow.guest:topten,other_route1,other_route2');
-Route::get('/mikaito', [App\Http\Controllers\HomeController::class, 'mikaito'])->name('mikaito')->middleware('allow.guest:topten,other_route1,other_route2');
+Route::get('/mikaito', [App\Http\Controllers\HomeController::class, 'mikaito'])->name('mikaito');
 Route::get('/mypage/{id}', [App\Http\Controllers\MypageController::class, 'mypage'])->name('mypage');
 Route::get('/allvotes', [App\Http\Controllers\AllController::class, 'allvotes'])->name('allvotes');
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search')->middleware('allow.guest:search,other_route1,other_route2');

@@ -5,11 +5,13 @@
     @foreach($categories as $category)
     <a href="{{ route('category', ['category' => $category['choose'], 'user' => $user]) }}"><i class="fa-regular fa-clipboard"></i>{{ $category['name'] }}</a>
 @endforeach
-        <a href="/home"><i class="fa-solid fa-house-crack"></i>Go to Home</a>
-        <form action="/search" method="GET" class="search-form">
-            <textarea name="search" rows="1" cols="10"></textarea>
-            <input type="submit" value="検索">
-        </form>
+    <a href="/mikaito"><i class="fa-solid fa-clipboard"></i>未回答</a>
+    <a href="/topten"><i class="fa-solid fa-clipboard"></i>Top10</a>
+    <a href="/home"><i class="fa-solid fa-house-crack"></i>Go to Home</a>
+    <form action="/search" method="GET" class="search-form">
+        <textarea name="search" rows="1" cols="10"></textarea>
+        <input type="submit" value="検索">
+    </form>
 </div>
 
 @endsection
@@ -20,6 +22,9 @@
         <div class="title">みなさんへのお知らせ</div>
         <div class="notice">
             <p>何か知らせることがあったらここに書きます。</p>
+            <p>8/14:Youtubeチャンネルに作業動画をアップしました。</p>
+            <p>https://www.youtube.com/watch?v=fa7VF8v0L-M</p>
+            <p>Twitter開設：@Tsurugenefu</p>
         </div>        
     </div>
     <div class="ban">
@@ -42,7 +47,7 @@
         <div class="ichiran">
             <table class="commentban">
                 <tr>
-                    <th class="column1">ID</th>
+                    <th class="column1">Name</th>
                     <th class="column2">Comment</th>
                     <th class="column3">Date</th>
                 </tr>

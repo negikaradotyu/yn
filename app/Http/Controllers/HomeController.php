@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth')
-        ->except('topten', 'mikaito','index', 'post', 'keijiban', 'category','search','home');
+        ->except('topten','index', 'post', 'keijiban', 'category','search','home');
         $this->middleware(function ($request, $next) {
             Session::start();
             return $next($request);
@@ -76,10 +76,9 @@ class HomeController extends Controller
         ->join('summaries', 'questionaries.id', '=', 'summaries.id')
         ->select('questionaries.question', 'summaries.*')
         ->orderBy('questionaries.created_at', 'DESC')
-        ->take(5)
-        ->get();
+        ->paginate(10);
         
-        if($user['id']>0) {
+        if($user->id>0) {
             $records = DB::table('questionaries')
             ->join('records', 'questionaries.id', '=', 'records.question_id')
             ->select('questionaries.*', 'records.user_id', 'records.question_id')
@@ -161,9 +160,53 @@ class HomeController extends Controller
             $records = DB::table('questionaries')
             ->join('records', 'questionaries.id', '=', 'records.question_id')
             ->select('questionaries.*', 'records.user_id', 'records.question_id')
-            ->where('records.user_id', '!=', $user->id)
+            ->where('records.user_id', '=', $user->id)
             ->get();
         
         return view('category', compact('choose','categories','records','user','questions','counter'));        
     }
+
+    public function mikaito()
+    {   
+        $user = \Auth::user();
+        $choose['name'] = "未回答";
+        // get counter
+        $categories=Category::get();
+        $counts=AccessCounter::get();
+        $count = $counts->first();
+        $counter=$count->counter;
+        //question, yes, no , total
+        //userが答えたことのあるquestion_idを取得。
+        //question_id以外のquestion_idと等しいquestionsを取得する。
+        $records=Records::where('user_id', $user->id)->get();
+        $allquestions=DB::table('questionaries')
+        ->join('summaries', 'questionaries.id', '=', 'summaries.id')
+        ->select('questionaries.question', 'summaries.*')
+        ->orderBy('summaries.updated_at', 'DESC')
+        ->paginate(10);
+        $questions = [];
+        //dd($records);
+
+foreach ($allquestions as $allquestion) {
+    $d = 0;
+    foreach ($records as $record) {
+        if ($record['question_id'] == $allquestion->id) {
+            $d = 1;
+            break; // 見つかった場合はループを終了
+        }
+    }
+
+    if ($d == 0) {
+        $questions[] = [
+            'id' => $allquestion->id,
+            'question' => $allquestion->question,
+            'yes' => $allquestion->yes,
+            'no' => $allquestion->no,
+            'total' => $allquestion->total
+        ];
+            }
+        }
+return view('mikaito', compact('choose', 'categories', 'user', 'questions', 'counter'));
+
+}
 }
