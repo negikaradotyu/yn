@@ -46,6 +46,7 @@ Route::post('/store', [App\Http\Controllers\PostingController::class, 'store'])-
 Route::post('/kekka', [App\Http\Controllers\KekkaController::class, 'kekka'])->name('kekka');
 Route::post('/kekka2', [App\Http\Controllers\Kekka2Controller::class, 'kekka2'])->name('kekka2');
 Route::post('/kekka3', [App\Http\Controllers\Kekka3Controller::class, 'kekka3'])->name('kekka3');
+Route::post('/kekka4', [App\Http\Controllers\KekkaController::class, 'kekka4'])->name('kekka4');
 Route::get('/category/{category}', [App\Http\Controllers\HomeController::class, 'category'])->name('category')->middleware('allow.guest:category,other_route1,other_route2');
 
 Route::get('/topten', [App\Http\Controllers\HomeController::class, 'topten'])->name('topten')->middleware('allow.guest:topten,other_route1,other_route2');
@@ -55,4 +56,8 @@ Route::get('/allvotes', [App\Http\Controllers\AllController::class, 'allvotes'])
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search')->middleware('allow.guest:search,other_route1,other_route2');
 Route::get('/keijiban', [App\Http\Controllers\KeijibanController::class, 'keijiban'])->name('keijiban')->middleware('allow.guest:keijiban,other_route1,other_route2');
 Route::post('/toko', [App\Http\Controllers\KeijibanController::class, 'toko'])->name('toko');
+
+Route::get('/test', [App\Http\Controllers\TestController::class, 'test'])->name('test');
+Route::get('/show', [App\Http\Controllers\TestController::class, 'show'])->name('show');
+Route::post('/shibori', [App\Http\Controllers\TestController::class, 'shibori'])->name('shibori');
 

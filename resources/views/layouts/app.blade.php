@@ -31,6 +31,9 @@
 <div class="top-wrapper">
     <div class="accesscount">
         <p>投票者数:{{ $counter }}</p>
+        @php
+    session(['counter' => $counter]);
+@endphp
     </div>
     <a class="site-title" href="{{ url('/home') }}">
         <div class="blinking-text text-center">
@@ -71,7 +74,7 @@
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
+                                @csrf 
                             </form>
                         </div>
                         <a href="/keijiban">
